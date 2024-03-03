@@ -114,7 +114,7 @@ const checkTheAnswer = (i: number) => {
     }
   }
 
-  if (vocabulary.firstLang.length - countOfGuessedWords === 0) {
+  if (leftWords.value === 0) {
     buttonsInds.value = []
     correctInd = -1
     store.commit("exercise", vocabulary.id)
@@ -124,11 +124,12 @@ const checkTheAnswer = (i: number) => {
 const restart = () => {
   countOfGuessedWords = 0
   wrongInds.value = []
+  leftWords.value = vocabulary.firstLang.length - countOfGuessedWords
   indecies = vocabulary.firstLang.map((_, i) => i)
   fillButtonsInds()
 }
 
-const leftWords = ref(vocabulary.firstLang.length - countOfGuessedWords)
+const leftWords = ref(0)
 
 restart()
 
