@@ -7,6 +7,7 @@
           :action="renameVocabulary"
           :btnLabel="'Rename'"
           :redirect="true"
+          :previous="previous"
         />
       </section>
     </main>
@@ -14,10 +15,19 @@
 </template>
 
 <script setup lang="ts">
+import { useRoute } from "vue-router"
 import Container from "../components/Container.vue"
 import VocabularyForm from "../components/VocabularyForm.vue"
+import { getVocabulary } from "../helpers/getVocabulary"
+import { useStore } from "vuex"
+
+const route = useRoute()
+const store = useStore()
+
+const vocabulary = getVocabulary(route.params.id as string)
+const previous = vocabulary.name
 
 const renameVocabulary = (name: string) => {
-  console.log(`Rename ${name}`)
+  store.commit("renameVocabulary", { name, id: vocabulary.id })
 }
 </script>

@@ -14,10 +14,10 @@
 </template>
 
 <script setup lang="ts">
-import Container from "./Container.vue"
-import VocabularyForm from "./VocabularyForm.vue"
+import Container from "../components/Container.vue"
+import VocabularyForm from "../components/VocabularyForm.vue"
+import { useStore } from "../store"
+const store = useStore()
 
-const addVocabulary = (name: string) => {
-  console.log(`the name is ${name}`)
-}
+const addVocabulary = (name: string) => store.commit("addVocabulary", name)
 </script>

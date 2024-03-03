@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router"
 import VocabulariesList from "../views/VocabulariesList.vue"
-import NewVocabulary from "../components/NewVocabulary.vue"
+import NewVocabulary from "../views/NewVocabulary.vue"
 import OpenVocabulary from "../views/OpenVocabulary.vue"
 import RenameVocabulary from "../views/RenameVocabulary.vue"
 import ChangeWords from "../views/ChangeWords.vue"

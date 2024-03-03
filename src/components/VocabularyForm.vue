@@ -24,14 +24,16 @@
 import { ref } from "vue"
 import { RouterLink, useRouter } from "vue-router"
 
-const name = ref("")
 const router = useRouter()
 
-const { action, btnLabel, redirect } = defineProps<{
+const { action, btnLabel, redirect, previous } = defineProps<{
   action: (name: string) => void
   btnLabel: string
   redirect: boolean
+  previous?: string
 }>()
+
+const name = ref(previous ? previous : "")
 
 const submit = () => {
   action(name.value)
