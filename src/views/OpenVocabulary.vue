@@ -45,7 +45,7 @@
             <div class="btnContainer">
               <RouterLink
                 class="btn btn-primary"
-                :to="`change/${vocabulary().wordsIds[index]}`"
+                :to="`${id}/change/${vocabulary().wordsIds[index]}`"
               >
                 Change
               </RouterLink>
