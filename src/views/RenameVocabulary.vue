@@ -24,10 +24,12 @@ import { useStore } from "vuex"
 const route = useRoute()
 const store = useStore()
 
-const vocabulary = getVocabulary(route.params.id as string)
+const id = route.params.id as string
+
+const vocabulary = getVocabulary(id)
 const previous = vocabulary.name
 
 const renameVocabulary = (name: string) => {
-  store.commit("renameVocabulary", { name, id: vocabulary.id })
+  store.commit("renameVocabulary", { name, id })
 }
 </script>

@@ -8,7 +8,7 @@
       </p>
 
       <div class="btnContainer">
-        <RouterLink class="btn btn-secondary" :to="`/${vocabulary.id}`">
+        <RouterLink class="btn btn-secondary" :to="`/${id}`">
           Cancel
         </RouterLink>
         <button class="btn btn-success" type="button" @click="restart">
@@ -42,7 +42,7 @@
               }
             "
           >
-            {{ vocabulary.firstLang[index] }}
+            {{ firstLang[index] }}
           </li>
         </ul>
 
@@ -68,7 +68,7 @@
               }
             "
           >
-            {{ vocabulary.secLang[index] }}
+            {{ secLang[index] }}
           </li>
         </ul>
       </section>
@@ -94,7 +94,7 @@ const store = useStore()
 
 const id = route.params.id as string
 
-const vocabulary = getVocabulary(id)
+const { firstLang, secLang } = getVocabulary(id)
 
 const currIndFL = ref<number[]>([])
 const currIndSL = ref<number[]>([])
@@ -119,7 +119,7 @@ const clearButtons = () => {
 }
 
 const getIndecies = () => {
-  indecies = vocabulary.firstLang.map((_, i) => i)
+  indecies = firstLang.map((_, i) => i)
 }
 
 const getRandomNumber = (min: number, max: number) => {
@@ -164,7 +164,7 @@ const go = () => {
     guessedIndFL.value.push(selectedFL.value)
     guessedIndSL.value.push(selectedSL.value)
     countOfGuessedWords++
-    leftWords.value = vocabulary.firstLang.length - countOfGuessedWords
+    countLeftWords()
     clearSelected()
   } else {
     wrongAnswer.value = true
@@ -174,7 +174,7 @@ const go = () => {
     }, 500)
   }
 
-  if (leftWords.value === 0) store.commit("exercise", vocabulary.id)
+  if (leftWords.value === 0) store.commit("exercise", id)
 
   if (guessedIndFL.value.length === countOfStrins) {
     clearButtons()
@@ -184,7 +184,7 @@ const go = () => {
 
 const restart = () => {
   countOfGuessedWords = 0
-  leftWords.value = vocabulary.firstLang.length - countOfGuessedWords
+  countLeftWords()
   clearButtons()
   getIndecies()
   fillCurrentWords()
@@ -193,8 +193,10 @@ const restart = () => {
 const setSelectedFL = (value: number) => (selectedFL.value = value)
 const setSelectedSL = (value: number) => (selectedSL.value = value)
 
-const isNotEnoughWords = vocabulary.firstLang.length < 4
+const countLeftWords = () =>
+  (leftWords.value = firstLang.length - countOfGuessedWords)
 
+const isNotEnoughWords = firstLang.length < 4
 const leftWords = ref(0)
 
 restart()

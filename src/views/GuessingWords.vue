@@ -8,7 +8,7 @@
       </p>
 
       <div class="btnContainer">
-        <RouterLink class="btn btn-secondary" :to="`/${vocabulary.id}`">
+        <RouterLink class="btn btn-secondary" :to="`/${id}`">
           Cancel
         </RouterLink>
         <button class="btn btn-success" @click="restart">Restart</button>
@@ -19,7 +19,7 @@
       <section>
         <h1 class="visually-hidden">playing guessing words</h1>
         <p class="mb-4 text-2xl text-center">
-          {{ vocabulary.firstLang[correctInd] }}
+          {{ firstLang[correctInd] }}
         </p>
         <ul class="wordsColumn">
           <li
@@ -28,7 +28,7 @@
             @click="() => checkTheAnswer(i)"
             :key="i"
           >
-            {{ vocabulary.secLang[bIndex] }}
+            {{ secLang[bIndex] }}
           </li>
         </ul>
       </section>
@@ -50,7 +50,7 @@ const store = useStore()
 
 const id = route.params.id as string
 
-const vocabulary = getVocabulary(id)
+const { firstLang, secLang } = getVocabulary(id)
 
 const countOfStrins = 6
 let indecies: number[] = []
@@ -81,13 +81,10 @@ const fillButtonsInds = () => {
 
   indecies.splice(rndIndex, 1)
 
-  const minimal = Math.min(countOfStrins, vocabulary.firstLang.length)
+  const minimal = Math.min(countOfStrins, firstLang.length)
 
   for (let i = 1; i < minimal; i++) {
-    const rndIndexForButtns = getRandomNumber(
-      0,
-      vocabulary.firstLang.length - 1
-    )
+    const rndIndexForButtns = getRandomNumber(0, firstLang.length - 1)
 
     if (l.includes(rndIndexForButtns) || correctInd === rndIndexForButtns) {
       i--
@@ -105,7 +102,7 @@ const fillButtonsInds = () => {
 const checkTheAnswer = (i: number) => {
   if (buttonsInds.value[i] === correctInd) {
     countOfGuessedWords++
-    leftWords.value = vocabulary.firstLang.length - countOfGuessedWords
+    countLeftWords()
     wrongInds.value = []
     fillButtonsInds()
   } else {
@@ -117,21 +114,23 @@ const checkTheAnswer = (i: number) => {
   if (leftWords.value === 0) {
     buttonsInds.value = []
     correctInd = -1
-    store.commit("exercise", vocabulary.id)
+    store.commit("exercise", id)
   }
 }
 
 const restart = () => {
   countOfGuessedWords = 0
   wrongInds.value = []
-  leftWords.value = vocabulary.firstLang.length - countOfGuessedWords
-  indecies = vocabulary.firstLang.map((_, i) => i)
+  countLeftWords()
+  indecies = firstLang.map((_, i) => i)
   fillButtonsInds()
 }
 
+const countLeftWords = () =>
+  (leftWords.value = firstLang.length - countOfGuessedWords)
+
+const isNotEnoughWords = firstLang.length < 4
 const leftWords = ref(0)
 
 restart()
-
-const isNotEnoughWords = vocabulary.firstLang.length < 4
 </script>

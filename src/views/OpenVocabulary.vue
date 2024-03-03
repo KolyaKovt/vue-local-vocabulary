@@ -1,12 +1,10 @@
 <template>
   <Container>
     <Header :full="true">
-      <p class="mainTitle mb-6">
-        {{ vocabulary().name }} (count: {{ vocabulary().firstLang.length }})
-      </p>
+      <p class="mainTitle mb-6">{{ name }} (count: {{ firstLang.length }})</p>
       <ul class="btnContainer">
         <li>
-          <RouterLink class="btn btn-secondary" :to="'/'">Cancel</RouterLink>
+          <RouterLink class="btn btn-secondary" to="/">Cancel</RouterLink>
         </li>
         <li>
           <RouterLink class="btn btn-success" :to="`${id}/add`">
@@ -35,31 +33,24 @@
         <ul class="itemsList">
           <li
             class="container-for-word-pairs"
-            v-for="(word, index) in vocabulary().firstLang"
-            :key="vocabulary().wordsIds[index]"
+            v-for="(word, index) in firstLang"
+            :key="wordsIds[index]"
           >
             <div class="wordPairs">
               <div class="word">{{ word }}</div>
-              <div class="word">{{ vocabulary().secLang[index] }}</div>
+              <div class="word">{{ secLang[index] }}</div>
             </div>
             <div class="btnContainer">
               <RouterLink
                 class="btn btn-primary"
-                :to="`${id}/change/${vocabulary().wordsIds[index]}`"
+                :to="`${id}/change/${wordsIds[index]}`"
               >
                 Change
               </RouterLink>
               <button
                 class="btn btn-danger"
                 type="button"
-                @click="
-                  () =>
-                    confirmDelete(
-                      vocabulary().id,
-                      vocabulary().wordsIds[index],
-                      word
-                    )
-                "
+                @click="() => confirmDelete(id, wordsIds[index], word)"
               >
                 Delete
               </button>
@@ -84,7 +75,7 @@ const route = useRoute()
 const toast = useToast()
 const store = useStore()
 
-const id = route.params.id
+const id = route.params.id as string
 
 const confirmDelete = (vocabularyId: string, wordId: string, word: string) => {
   toast({
@@ -98,5 +89,5 @@ const confirmDelete = (vocabularyId: string, wordId: string, word: string) => {
   })
 }
 
-const vocabulary = () => getVocabulary(id as string)
+const { firstLang, secLang, name, wordsIds } = getVocabulary(id)
 </script>

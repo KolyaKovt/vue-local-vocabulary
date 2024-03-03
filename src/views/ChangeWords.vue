@@ -1,9 +1,7 @@
 <template>
   <Container>
     <main>
-      <h1 className="mainTitle mt-6 mb-6">
-        Changing words in: {{ vocabulary.name }}
-      </h1>
+      <h1 className="mainTitle mt-6 mb-6">Changing words in: {{ name }}</h1>
       <WordsForm
         :action="changeWord"
         :btnLabel="'Change'"
@@ -27,14 +25,14 @@ const store = useStore()
 const vocabularyId = route.params.id as string
 const wordId = route.params.wordId as string
 
-const vocabulary = getVocabulary(vocabularyId)
+const { name, firstLang, secLang, wordsIds } = getVocabulary(vocabularyId)
 
 const changeWord = (word: string, translation: string) => {
   store.commit("changeWord", { vocabularyId, wordId, word, translation })
 }
 
-const ind = vocabulary.wordsIds.indexOf(wordId)
+const ind = wordsIds.indexOf(wordId)
 
-const word = vocabulary.firstLang[ind]
-const translation = vocabulary.secLang[ind]
+const word = firstLang[ind]
+const translation = secLang[ind]
 </script>

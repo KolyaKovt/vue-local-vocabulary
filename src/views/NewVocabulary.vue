@@ -17,6 +17,7 @@
 import Container from "../components/Container.vue"
 import VocabularyForm from "../components/VocabularyForm.vue"
 import { useStore } from "../store"
+
 const store = useStore()
 
 const addVocabulary = (name: string) => store.commit("addVocabulary", name)
