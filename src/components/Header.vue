@@ -1,9 +1,3 @@
-<script setup lang="ts">
-const { full } = defineProps<{
-  full: boolean
-}>()
-</script>
-
 <template>
   <header
     :class="`sticky ${
@@ -13,3 +7,9 @@ const { full } = defineProps<{
     <slot></slot>
   </header>
 </template>
+
+<script setup lang="ts">
+const { full } = defineProps<{
+  full: boolean
+}>()
+</script>

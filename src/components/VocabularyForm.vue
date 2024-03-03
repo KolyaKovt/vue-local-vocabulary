@@ -1,23 +1,3 @@
-<script setup lang="ts">
-import { ref } from "vue"
-import { RouterLink, useRouter } from "vue-router"
-
-const name = ref("")
-const router = useRouter()
-
-const { action, btnLabel, redirect } = defineProps<{
-  action: (name: string) => void
-  btnLabel: string
-  redirect: boolean
-}>()
-
-const submit = () => {
-  action(name.value)
-  name.value = ""
-  if (redirect) router.push("/")
-}
-</script>
-
 <template>
   <form @submit.prevent="submit">
     <div class="form-control">
@@ -39,3 +19,23 @@ const submit = () => {
     </div>
   </form>
 </template>
+
+<script setup lang="ts">
+import { ref } from "vue"
+import { RouterLink, useRouter } from "vue-router"
+
+const name = ref("")
+const router = useRouter()
+
+const { action, btnLabel, redirect } = defineProps<{
+  action: (name: string) => void
+  btnLabel: string
+  redirect: boolean
+}>()
+
+const submit = () => {
+  action(name.value)
+  name.value = ""
+  if (redirect) router.push("/")
+}
+</script>

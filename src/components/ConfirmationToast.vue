@@ -1,11 +1,3 @@
-<script setup lang="ts">
-const { message, onConfirm } = defineProps<{
-  message: string
-  onConfirm: () => void
-}>()
-
-</script>
-
 <template>
   <div>
     <p class="mb-2">{{ message }}</p>
@@ -16,3 +8,10 @@ const { message, onConfirm } = defineProps<{
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+const { message, onConfirm } = defineProps<{
+  message: string
+  onConfirm: () => void
+}>()
+</script>
