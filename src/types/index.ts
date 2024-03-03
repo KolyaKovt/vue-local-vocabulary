@@ -6,12 +6,3 @@ export interface Vocabulary {
   wordsIds: string[]
   exercise: number
 }
-
-export interface VocabularyFormData {
-  name: string
-}
-
-export interface WordFormData {
-  word: string
-  translation: string
-}

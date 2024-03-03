@@ -1,5 +1,5 @@
 import { Store, createStore } from "vuex"
-import createPersistedState from 'vuex-persistedstate'
+import createPersistedState from "vuex-persistedstate"
 import { Vocabulary } from "../types"
 import { nanoid } from "nanoid"
 import { getVocabulary } from "../helpers/getVocabulary"
@@ -78,11 +78,9 @@ const store = createStore<State>({
   actions: {},
   getters: {},
   modules: {},
-  plugins: [createPersistedState()]
+  plugins: [createPersistedState()],
 })
 
 export default store
 
-export function useStore(): Store<State> {
-  return store as Store<State>
-}
+export const useStore = (): Store<State> => store
