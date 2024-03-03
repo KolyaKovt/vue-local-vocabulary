@@ -31,59 +31,48 @@ const store = createStore<State>({
       const voc = getVocabulary(id)
       voc.name = name
     },
-    // addWord: (
-    //   state,
-    //   {
-    //     payload,
-    //   }: {
-    //     payload: { vocabularyId: string; word: string; translation: string }
-    //   }
-    // ) => {
-    //   const { word, translation, vocabularyId } = payload
+    addWord: (
+      _,
+      payload: { vocabularyId: string; word: string; translation: string }
+    ) => {
+      const { word, translation, vocabularyId } = payload
 
-    //   const voc = getVocabularyFromState(state, vocabularyId)
-    //   voc.firstLang.push(word)
-    //   voc.secLang.push(translation)
-    //   voc.wordsIds.push(nanoid())
-    // },
-    // deleteWord: (
-    //   state,
-    //   { payload }: { payload: { vocabularyId: string; wordId: string } }
-    // ) => {
-    //   const { vocabularyId, wordId } = payload
+      const voc = getVocabulary(vocabularyId)
+      voc.firstLang.push(word)
+      voc.secLang.push(translation)
+      voc.wordsIds.push(nanoid())
+    },
+    deleteWord: (_, payload: { vocabularyId: string; wordId: string }) => {
+      const { vocabularyId, wordId } = payload
 
-    //   const voc = getVocabularyFromState(state, vocabularyId)
-    //   const ind = voc.wordsIds.indexOf(wordId)
+      const voc = getVocabulary(vocabularyId)
+      const ind = voc.wordsIds.indexOf(wordId)
 
-    //   voc.firstLang.splice(ind, 1)
-    //   voc.secLang.splice(ind, 1)
-    //   voc.wordsIds.splice(ind, 1)
-    // },
-    // changeWord: (
-    //   state,
-    //   {
-    //     payload,
-    //   }: {
-    //     payload: {
-    //       vocabularyId: string
-    //       wordId: string
-    //       word: string
-    //       translation: string
-    //     }
-    //   }
-    // ) => {
-    //   const { vocabularyId, wordId, word, translation } = payload
+      voc.firstLang.splice(ind, 1)
+      voc.secLang.splice(ind, 1)
+      voc.wordsIds.splice(ind, 1)
+    },
+    changeWord: (
+      _,
+      payload: {
+        vocabularyId: string
+        wordId: string
+        word: string
+        translation: string
+      }
+    ) => {
+      const { vocabularyId, wordId, word, translation } = payload
 
-    //   const voc = getVocabularyFromState(state, vocabularyId)
-    //   const ind = voc.wordsIds.indexOf(wordId)
+      const voc = getVocabulary(vocabularyId)
+      const ind = voc.wordsIds.indexOf(wordId)
 
-    //   voc.firstLang[ind] = word
-    //   voc.secLang[ind] = translation
-    // },
-    // exercise: (state, { payload }: { payload: string }) => {
-    //   const voc = getVocabularyFromState(state, payload)
-    //   voc.exercise++
-    // },
+      voc.firstLang[ind] = word
+      voc.secLang[ind] = translation
+    },
+    exercise: (_, id: string) => {
+      const voc = getVocabulary(id)
+      voc.exercise++
+    },
   },
   actions: {},
   getters: {},
