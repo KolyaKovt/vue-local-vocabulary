@@ -20,55 +20,34 @@
     <main class="w-[100%]">
       <section>
         <h1 class="visually-hidden">plaing connecting words</h1>
-        <ul class="wordsColumn mb-6">
+        <ul
+          :class="`wordsColumn ${columnInd === 0 ? 'mb-6' : ''}`"
+          v-for="(
+            { currInd, selected, guessedInd, lang, setSelected }, columnInd
+          ) in wordsColumns"
+        >
           <li
-            v-for="(index, i) in currIndFL"
+            v-for="(index, i) in currInd"
             :key="i"
             :class="
               'word ' +
-              (wrongAnswer && selectedFL === i
+              (wrongAnswer && selected === i
                 ? 'wrong'
-                : guessedIndFL.includes(i)
+                : guessedInd.includes(i)
                 ? 'guessed'
-                : selectedFL === i
+                : selected === i
                 ? 'selected'
                 : '')
             "
             @click="
               () => {
                 if (wrongAnswer) return
-                selectedFL === i ? setSelectedFL(-1) : setSelectedFL(i)
+                selected === i ? setSelected(-1) : setSelected(i)
                 go()
               }
             "
           >
-            {{ firstLang[index] }}
-          </li>
-        </ul>
-
-        <ul class="wordsColumn">
-          <li
-            v-for="(index, i) in currIndSL"
-            :key="i"
-            :class="
-              'word ' +
-              (wrongAnswer && selectedSL === i
-                ? 'wrong'
-                : guessedIndSL.includes(i)
-                ? 'guessed'
-                : selectedSL === i
-                ? 'selected'
-                : '')
-            "
-            @click="
-              () => {
-                if (wrongAnswer) return
-                selectedSL === i ? setSelectedSL(-1) : setSelectedSL(i)
-                go()
-              }
-            "
-          >
-            {{ secLang[index] }}
+            {{ lang[index] }}
           </li>
         </ul>
       </section>
@@ -83,8 +62,9 @@ import Container from "../components/Container.vue"
 import { RouterLink, useRoute } from "vue-router"
 import { useStore } from "../store"
 import { getVocabulary } from "../helpers/getVocabulary"
-import { ref } from "vue"
+import { ref, watchEffect } from "vue"
 import { getRandomNumber } from "../helpers/getRandomNumber"
+import { WordsColumn } from "../types"
 
 const countOfStrins = 4
 let indecies: number[] = []
@@ -107,6 +87,11 @@ const guessedIndFL = ref<number[]>([])
 const guessedIndSL = ref<number[]>([])
 
 const wrongAnswer = ref(false)
+
+const isNotEnoughWords = firstLang.length < 4
+const leftWords = ref(-1)
+
+const wordsColumns = ref<WordsColumn[]>([])
 
 const clearSelected = () => {
   selectedFL.value = -1
@@ -193,8 +178,24 @@ const setSelectedSL = (value: number) => (selectedSL.value = value)
 const countLeftWords = () =>
   (leftWords.value = firstLang.length - countOfGuessedWords)
 
-const isNotEnoughWords = firstLang.length < 4
-const leftWords = ref(0)
+watchEffect(() => {
+  wordsColumns.value = [
+    {
+      currInd: currIndFL.value,
+      selected: selectedFL.value,
+      guessedInd: guessedIndFL.value,
+      setSelected: setSelectedFL,
+      lang: firstLang,
+    },
+    {
+      currInd: currIndSL.value,
+      selected: selectedSL.value,
+      guessedInd: guessedIndSL.value,
+      setSelected: setSelectedSL,
+      lang: secLang,
+    },
+  ]
+})
 
 restart()
 </script>
