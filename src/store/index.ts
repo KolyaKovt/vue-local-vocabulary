@@ -6,11 +6,13 @@ import { getVocabulary } from "../helpers/getVocabulary"
 
 interface State {
   vocabularies: Vocabulary[]
+  isLoading: boolean
 }
 
 const store = createStore<State>({
   state: {
     vocabularies: [],
+    isLoading: false,
   },
   mutations: {
     deleteVocabulary(state, id: string) {
@@ -73,6 +75,9 @@ const store = createStore<State>({
     exercise: (_, id: string) => {
       const voc = getVocabulary(id)
       voc.exercise++
+    },
+    setIsLoading: (state, value: boolean) => {
+      state.isLoading = value
     },
   },
   actions: {},

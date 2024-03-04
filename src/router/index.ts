@@ -1,12 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router"
-import VocabulariesList from "../views/VocabulariesList.vue"
-import NewVocabulary from "../views/NewVocabulary.vue"
-import OpenVocabulary from "../views/OpenVocabulary.vue"
-import RenameVocabulary from "../views/RenameVocabulary.vue"
-import ChangeWords from "../views/ChangeWords.vue"
-import AddWords from "../views/AddWords.vue"
-import GuessingWords from "../views/GuessingWords.vue"
-import ConnectingWords from "../views/ConnectingWords.vue"
+import { useStore } from "../store"
+
+const VocabulariesList = () => import("../views/VocabulariesList.vue")
+const NewVocabulary = () => import("../views/NewVocabulary.vue")
+const OpenVocabulary = () => import("../views/OpenVocabulary.vue")
+const RenameVocabulary = () => import("../views/RenameVocabulary.vue")
+const ChangeWords = () => import("../views/ChangeWords.vue")
+const AddWords = () => import("../views/AddWords.vue")
+const GuessingWords = () => import("../views/GuessingWords.vue")
+const ConnectingWords = () => import("../views/ConnectingWords.vue")
 
 const routes = [
   {
@@ -45,6 +47,17 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+})
+
+const store = useStore()
+
+router.beforeEach((_, __, next) => {
+  store.commit("setIsLoading", true)
+  next()
+})
+
+router.afterEach(() => {
+  store.commit("setIsLoading", false)
 })
 
 export default router
