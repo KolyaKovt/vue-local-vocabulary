@@ -44,6 +44,7 @@ import NotEnoughWordsError from "../components/NotEnoughWordsError.vue"
 import { getVocabulary } from "../helpers/getVocabulary"
 import { ref } from "vue"
 import { useStore } from "../store"
+import { getRandomNumber } from "../helpers/getRandomNumber"
 
 const route = useRoute()
 const store = useStore()
@@ -59,10 +60,6 @@ let correctInd = -1
 
 const buttonsInds = ref<number[]>([])
 const wrongInds = ref<number[]>([])
-
-const getRandomNumber = (min: number, max: number) => {
-  return Math.floor(Math.random() * (max - min + 1)) + min
-}
 
 const shuffleArray = (array: number[]) => {
   for (let i = 0; i < array.length; i++) {

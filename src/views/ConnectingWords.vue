@@ -84,6 +84,7 @@ import { RouterLink, useRoute } from "vue-router"
 import { useStore } from "../store"
 import { getVocabulary } from "../helpers/getVocabulary"
 import { ref } from "vue"
+import { getRandomNumber } from "../helpers/getRandomNumber"
 
 const countOfStrins = 4
 let indecies: number[] = []
@@ -120,10 +121,6 @@ const clearButtons = () => {
 
 const getIndecies = () => {
   indecies = firstLang.map((_, i) => i)
-}
-
-const getRandomNumber = (min: number, max: number) => {
-  return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
 const shuffleArray = (array: number[]) => {

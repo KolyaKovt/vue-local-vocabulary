@@ -2,7 +2,6 @@
   <Container>
     <main>
       <h1 className="mainTitle mt-6 mb-6">Adding words to: {{ name }}</h1>
-      <button @click="() => store.commit('setIsLoading', true)">Load</button>
       <WordsForm :action="addWord" :btnLabel="'Add'" :redirect="false" />
     </main>
   </Container>
