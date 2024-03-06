@@ -21,7 +21,7 @@ const store = createStore<State>({
     addVocabulary: (state, name: string) => {
       state.vocabularies.push({
         id: nanoid(),
-        name,
+        name: name.trim(),
         firstLang: [],
         secLang: [],
         wordsIds: [],
@@ -32,7 +32,7 @@ const store = createStore<State>({
       const { id, name } = payload
 
       const voc = getVocabulary(id)
-      voc.name = name
+      voc.name = name.trim()
     },
     addWord: (
       _,
@@ -41,8 +41,8 @@ const store = createStore<State>({
       const { word, translation, vocabularyId } = payload
 
       const voc = getVocabulary(vocabularyId)
-      voc.firstLang.push(word)
-      voc.secLang.push(translation)
+      voc.firstLang.push(word.trim())
+      voc.secLang.push(translation.trim())
       voc.wordsIds.push(nanoid())
     },
     deleteWord: (_, payload: { vocabularyId: string; wordId: string }) => {
@@ -69,8 +69,8 @@ const store = createStore<State>({
       const voc = getVocabulary(vocabularyId)
       const ind = voc.wordsIds.indexOf(wordId)
 
-      voc.firstLang[ind] = word
-      voc.secLang[ind] = translation
+      voc.firstLang[ind] = word.trim()
+      voc.secLang[ind] = translation.trim()
     },
     exercise: (_, id: string) => {
       const voc = getVocabulary(id)
