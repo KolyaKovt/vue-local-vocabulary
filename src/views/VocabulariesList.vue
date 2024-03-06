@@ -11,32 +11,24 @@
       <section>
         <h2 class="visually-hidden">Vocabularies list</h2>
         <ul class="itemsList">
-          <li v-for="{ name, exercise, id } in vocabularies" :key="id">
-            <div class="btnContainer mb-4 font-bold text-2xl overflow-x-auto">
+          <li class="flex justify-between items-center p-2 border rounded-lg" v-for="{ name, exercise, id } in vocabularies" :key="id">
+            <div
+              class="btnContainer font-bold text-2xl overflow-x-auto"
+              @click="() => router.push(`/${id}`)"
+            >
               <p>{{ name }}</p>
               <p>({{ exercise }})</p>
             </div>
-            <ul class="btnContainer">
+            <Menu>
               <li>
-                <RouterLink class="btn btn-secondary" :to="`/${id}`">
-                  Open
-                </RouterLink>
+                <RouterLink :to="`/rename/${id}`">Rename</RouterLink>
               </li>
               <li>
-                <RouterLink class="btn btn-primary" :to="`/rename/${id}`">
-                  Rename
-                </RouterLink>
-              </li>
-              <li>
-                <button
-                  class="btn btn-danger"
-                  type="button"
-                  @click="() => confirmDelete(id, name)"
-                >
+                <button type="button" @click="() => confirmDelete(id, name)">
                   Delete
                 </button>
               </li>
-            </ul>
+            </Menu>
           </li>
         </ul>
       </section>
@@ -45,14 +37,16 @@
 </template>
 
 <script setup lang="ts">
-import { RouterLink } from "vue-router"
+import { RouterLink, useRouter } from "vue-router"
 import { computed } from "vue"
 import Header from "../components/Header.vue"
 import Container from "../components/Container.vue"
 import { useStore } from "../store"
 import { confirm } from "../helpers/confirm"
+import Menu from "../components/Menu.vue"
 
 const store = useStore()
+const router = useRouter()
 
 const vocabularies = computed(() => store.state.vocabularies)
 
