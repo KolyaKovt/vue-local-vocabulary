@@ -1,6 +1,6 @@
 <template>
   <div class="dropdown dropdown-end">
-    <div tabindex="0" role="button" class="btn m-1">
+    <div tabindex="0" role="button" class="btn btn-sm">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

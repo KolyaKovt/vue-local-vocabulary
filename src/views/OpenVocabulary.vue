@@ -1,7 +1,7 @@
 <template>
   <Container>
     <Header :full="true">
-      <div class="flex justify-between items-center mb-2">
+      <div class="flex justify-between items-center mb-4">
         <p class="mainTitle">{{ name }} (count: {{ firstLang.length }})</p>
 
         <Menu>
@@ -74,7 +74,12 @@
               <div class="word w-[50%]">{{ secLang[index] }}</div>
             </div>
 
-            <input class="cursor-pointer" type="checkbox" :value="index" v-model="selectedWords" />
+            <input
+              class="cursor-pointer"
+              type="checkbox"
+              :value="index"
+              v-model="selectedWords"
+            />
           </li>
         </ul>
       </section>
@@ -91,8 +96,12 @@
     "
   >
     <div class="w-[300px] h-[300px] bg-[white] rounded-lg p-4 overflow-y-auto">
-      <ul>
-        <li class="text-xl text-[black] cursor-pointer" v-for="{ name, id } in vocabularies" @click="() => moveWordsTo(id)">
+      <ul class="flex flex-col gap-2">
+        <li
+          class="text-2xl text-[black] cursor-pointer"
+          v-for="{ name, id } in vocabularies"
+          @click="() => moveWordsTo(id)"
+        >
           {{ name }}
         </li>
       </ul>

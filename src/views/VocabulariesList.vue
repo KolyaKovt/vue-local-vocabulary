@@ -11,9 +11,13 @@
       <section>
         <h2 class="visually-hidden">Vocabularies list</h2>
         <ul class="itemsList">
-          <li class="flex justify-between items-center p-2 border rounded-lg" v-for="{ name, exercise, id } in vocabularies" :key="id">
+          <li
+            class="flex justify-between items-center p-2 border rounded-lg"
+            v-for="{ name, exercise, id } in vocabularies"
+            :key="id"
+          >
             <div
-              class="btnContainer font-bold text-2xl overflow-x-auto cursor-pointer"
+              class="btnContainer font-bold text-xl overflow-x-auto cursor-pointer"
               @click="() => router.push(`/${id}`)"
             >
               <p>{{ name }}</p>
