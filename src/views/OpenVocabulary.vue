@@ -87,7 +87,7 @@
   </Container>
 
   <div
-    class="fixed top-0 w-[100%] h-[100vh] bg-[#00000062] flex justify-center items-center"
+    class="fixed z-[2] top-0 w-[100%] h-[100vh] bg-[#00000062] flex justify-center items-center"
     v-if="moveWords"
     @click="
       e => {

@@ -61,7 +61,7 @@ img {
   @apply flex gap-2 w-[100%];
 }
 .word {
-  @apply p-2 text-lg border border-[#a6adbb] rounded;
+  @apply p-2 text-sm border border-[#a6adbb] rounded;
 }
 .wrong {
   @apply text-red-400 border-red-400;
