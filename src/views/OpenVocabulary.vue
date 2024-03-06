@@ -4,44 +4,24 @@
       <div class="flex justify-between items-center">
         <p class="mainTitle">{{ name }} (count: {{ firstLang.length }})</p>
 
-        <div class="dropdown dropdown-end">
-          <div tabindex="0" role="button" class="btn m-1">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              class="inline-block w-5 h-5 stroke-current"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              ></path>
-            </svg>
-          </div>
-          <ul
-            tabindex="0"
-            class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-          >
-            <li>
-              <RouterLink to="/">Vocabularies</RouterLink>
-            </li>
-            <li>
-              <RouterLink :to="`${id}/add`">Add words</RouterLink>
-            </li>
-            <li>
-              <RouterLink :to="`${id}/play/connecting-words`">
-                Play connecting words
-              </RouterLink>
-            </li>
-            <li>
-              <RouterLink :to="`${id}/play/guessing-words`">
-                Play guessing word
-              </RouterLink>
-            </li>
-          </ul>
-        </div>
+        <Menu>
+          <li>
+            <RouterLink to="/">Vocabularies</RouterLink>
+          </li>
+          <li>
+            <RouterLink :to="`${id}/add`">Add words</RouterLink>
+          </li>
+          <li>
+            <RouterLink :to="`${id}/play/connecting-words`">
+              Play connecting words
+            </RouterLink>
+          </li>
+          <li>
+            <RouterLink :to="`${id}/play/guessing-words`">
+              Play guessing word
+            </RouterLink>
+          </li>
+        </Menu>
       </div>
     </Header>
 
@@ -95,45 +75,25 @@
                 v-if="selectedWords.length !== 0"
               />
 
-              <div class="dropdown dropdown-end" v-else>
-                <div tabindex="0" role="button" class="btn m-1">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    class="inline-block w-5 h-5 stroke-current"
+              <Menu v-else>
+                <li>
+                  <RouterLink :to="`${id}/change/${wordsIds[index]}`">
+                    Change
+                  </RouterLink>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    @click="
+                      () => {
+                        selectedWords.push(index)
+                      }
+                    "
                   >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M4 6h16M4 12h16M4 18h16"
-                    ></path>
-                  </svg>
-                </div>
-                <ul
-                  tabindex="0"
-                  class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-                >
-                  <li>
-                    <RouterLink :to="`${id}/change/${wordsIds[index]}`">
-                      Change
-                    </RouterLink>
-                  </li>
-                  <li>
-                    <button
-                      type="button"
-                      @click="
-                        () => {
-                          selectedWords.push(index)
-                        }
-                      "
-                    >
-                      Select
-                    </button>
-                  </li>
-                </ul>
-              </div>
+                    Select
+                  </button>
+                </li>
+              </Menu>
             </div>
           </li>
         </ul>
@@ -162,11 +122,14 @@
 
 <script setup lang="ts">
 import { RouterLink, useRoute } from "vue-router"
-import Container from "../components/Container.vue"
-import { getVocabulary } from "../helpers/getVocabulary"
-import Header from "../components/Header.vue"
-import { useStore } from "../store"
 import { ref } from "vue"
+
+import Container from "../components/Container.vue"
+import Header from "../components/Header.vue"
+import Menu from "../components/Menu.vue"
+
+import { getVocabulary } from "../helpers/getVocabulary"
+import { useStore } from "../store"
 import { confirm } from "../helpers/confirm"
 
 const route = useRoute()
