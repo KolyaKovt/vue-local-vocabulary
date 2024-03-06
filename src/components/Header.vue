@@ -1,6 +1,6 @@
 <template>
   <header
-    :class="`sticky ${
+    :class="`sticky z-[1] ${
       full ? 'min-w-[100%]' : 'min-w-[280px]'
     } py-6 top-0 bg-gradient-to-b from-base-100 via-base-100 via-95% to-transparent`"
   >

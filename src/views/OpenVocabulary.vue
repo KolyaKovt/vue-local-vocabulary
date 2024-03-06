@@ -67,14 +67,14 @@
             :key="wordsIds[index]"
           >
             <div
-              class="wordPairs"
+              class="wordPairs cursor-pointer"
               @click="() => router.push(`/${id}/change/${wordsIds[index]}`)"
             >
               <div class="word w-[50%]">{{ word }}</div>
               <div class="word w-[50%]">{{ secLang[index] }}</div>
             </div>
 
-            <input type="checkbox" :value="index" v-model="selectedWords" />
+            <input class="cursor-pointer" type="checkbox" :value="index" v-model="selectedWords" />
           </li>
         </ul>
       </section>
@@ -90,9 +90,9 @@
       }
     "
   >
-    <div class="w-[300px] h-[200px] bg-white rounded-lg">
+    <div class="w-[300px] h-[300px] bg-[white] rounded-lg p-4 overflow-y-auto">
       <ul>
-        <li v-for="{ name, id } in vocabularies" @click="() => moveWordsTo(id)">
+        <li class="text-xl text-[black] cursor-pointer" v-for="{ name, id } in vocabularies" @click="() => moveWordsTo(id)">
           {{ name }}
         </li>
       </ul>
