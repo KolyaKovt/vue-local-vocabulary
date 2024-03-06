@@ -49,7 +49,7 @@ img {
 @tailwind utilities;
 
 .mainTitle {
-  @apply text-4xl font-bold;
+  @apply text-2xl md:text-3xl font-bold;
 }
 .itemsList {
   @apply flex flex-col gap-6 pb-6 w-[280px];

@@ -46,27 +46,18 @@
 
 <script setup lang="ts">
 import { RouterLink } from "vue-router"
-import { useToast } from "vue-toastification"
 import { computed } from "vue"
 import Header from "../components/Header.vue"
 import Container from "../components/Container.vue"
-import ConfirmationToast from "../components/ConfirmationToast.vue"
 import { useStore } from "../store"
+import { confirm } from "../helpers/confirm"
 
-const toast = useToast()
 const store = useStore()
 
 const vocabularies = computed(() => store.state.vocabularies)
 
-const confirmDelete = (id: string, name: string) => {
-  toast({
-    component: ConfirmationToast,
-    props: {
-      message: `Are you sure you want to delete "${name}"?`,
-      onConfirm: () => {
-        store.commit("deleteVocabulary", id)
-      },
-    },
+const confirmDelete = (id: string, name: string) =>
+  confirm(`Are you sure you want to delete "${name}"?`, () => {
+    store.commit("deleteVocabulary", id)
   })
-}
 </script>
