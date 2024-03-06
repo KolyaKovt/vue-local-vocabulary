@@ -24,7 +24,7 @@
         </Menu>
       </div>
 
-      <ul class="btnContainer sticky top-0">
+      <ul class="btnContainer">
         <li>
           <button
             class="btn btn-secondary btn-sm"
@@ -62,7 +62,7 @@
         <h1 class="visually-hidden">Words list</h1>
         <ul class="itemsList">
           <li
-            class="container-for-word-pairs"
+            class="container-for-word-pairs flex justify-between gap-2"
             v-for="(word, index) in firstLang"
             :key="wordsIds[index]"
           >

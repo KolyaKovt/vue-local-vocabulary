@@ -58,7 +58,7 @@ img {
   @apply flex gap-2 flex-wrap;
 }
 .wordPairs {
-  @apply flex gap-4 mb-4;
+  @apply flex gap-2 w-[100%];
 }
 .word {
   @apply p-2 text-lg border border-[#a6adbb] rounded;
