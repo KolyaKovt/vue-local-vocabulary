@@ -1,7 +1,7 @@
 <template>
   <Container>
     <Header :full="true">
-      <div class="flex justify-between items-center">
+      <div class="flex justify-between items-center mb-2">
         <p class="mainTitle">{{ name }} (count: {{ firstLang.length }})</p>
 
         <Menu>
@@ -23,40 +23,42 @@
           </li>
         </Menu>
       </div>
+
+      <ul class="btnContainer sticky top-0">
+        <li>
+          <button
+            class="btn btn-secondary btn-sm"
+            type="button"
+            @click="confirmDelete"
+            :disabled="!btnsActive"
+          >
+            Delete
+          </button>
+        </li>
+        <li>
+          <button
+            class="btn btn-primary btn-sm"
+            type="button"
+            @click="activateMoveWords"
+            :disabled="!btnsActive"
+          >
+            Move
+          </button>
+        </li>
+        <li>
+          <button
+            class="btn btn-danger btn-sm"
+            type="button"
+            @click="toggleSelected"
+          >
+            {{ isEveythingSelected ? "Clear" : "Select" }} all
+          </button>
+        </li>
+      </ul>
     </Header>
 
     <main>
-      <section class="pt-16">
-        <ul class="btnContainer" v-if="selectedWords.length !== 0">
-          <li>
-            <button
-              class="btn btn-secondary btn-sm"
-              type="button"
-              @click="confirmDelete"
-            >
-              Delete
-            </button>
-          </li>
-          <li>
-            <button
-              class="btn btn-primary btn-sm"
-              type="button"
-              @click="activateMoveWords"
-            >
-              Move
-            </button>
-          </li>
-          <li>
-            <button
-              class="btn btn-danger btn-sm"
-              type="button"
-              @click="selectAll"
-            >
-              Select all
-            </button>
-          </li>
-        </ul>
-
+      <section>
         <h1 class="visually-hidden">Words list</h1>
         <ul class="itemsList">
           <li
@@ -64,37 +66,15 @@
             v-for="(word, index) in firstLang"
             :key="wordsIds[index]"
           >
-            <div class="wordPairs">
+            <div
+              class="wordPairs"
+              @click="() => router.push(`/${id}/change/${wordsIds[index]}`)"
+            >
               <div class="word w-[50%]">{{ word }}</div>
               <div class="word w-[50%]">{{ secLang[index] }}</div>
-
-              <input
-                type="checkbox"
-                :value="index"
-                v-model="selectedWords"
-                v-if="selectedWords.length !== 0"
-              />
-
-              <Menu v-else>
-                <li>
-                  <RouterLink :to="`${id}/change/${wordsIds[index]}`">
-                    Change
-                  </RouterLink>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    @click="
-                      () => {
-                        selectedWords.push(index)
-                      }
-                    "
-                  >
-                    Select
-                  </button>
-                </li>
-              </Menu>
             </div>
+
+            <input type="checkbox" :value="index" v-model="selectedWords" />
           </li>
         </ul>
       </section>
@@ -121,8 +101,8 @@
 </template>
 
 <script setup lang="ts">
-import { RouterLink, useRoute } from "vue-router"
-import { ref } from "vue"
+import { RouterLink, useRoute, useRouter } from "vue-router"
+import { ref, watchEffect } from "vue"
 
 import Container from "../components/Container.vue"
 import Header from "../components/Header.vue"
@@ -134,6 +114,7 @@ import { confirm } from "../helpers/confirm"
 
 const route = useRoute()
 const store = useStore()
+const router = useRouter()
 
 const id = route.params.id as string
 
@@ -180,9 +161,21 @@ const moveWordsTo = (id: string) => {
   moveWords.value = false
 }
 
-const selectAll = () => {
-  if (selectedWords.value.length !== firstLang.length)
-    selectedWords.value = firstLang.map((_, i) => i)
-  else selectedWords.value = []
+const isEveythingSelected = ref(false)
+
+watchEffect(() => {
+  isEveythingSelected.value = selectedWords.value.length === firstLang.length
+  console.log(isEveythingSelected.value)
+})
+
+const toggleSelected = () => {
+  if (isEveythingSelected.value) selectedWords.value = []
+  else selectedWords.value = firstLang.map((_, i) => i)
 }
+
+const btnsActive = ref(false)
+
+watchEffect(() => {
+  btnsActive.value = selectedWords.value.length !== 0
+})
 </script>
